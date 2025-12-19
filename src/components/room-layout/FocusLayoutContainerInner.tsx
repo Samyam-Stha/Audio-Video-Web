@@ -1,9 +1,7 @@
 import {
   FocusLayout,
-  LayoutContextProvider,
   type TrackReferenceOrPlaceholder,
 } from "@livekit/components-react";
-import React from "react";
 
 const FocusLayoutContainerInner = ({
   trackRef,

@@ -2,12 +2,12 @@ import {
   LiveKitRoom,
   // ControlBar,
   RoomAudioRenderer,
-  Chat,
+  // Chat,
   LayoutContextProvider,
-  useLocalParticipant,
-  useChatToggle,
+  // useLocalParticipant,
+  // useChatToggle,
   useCreateLayoutContext,
-  useRoomContext,
+  // useRoomContext,
 } from "@livekit/components-react";
 import "@livekit/components-styles";
 import GridLayoutContainer from "../room-layout/GridLayoutContainer";
@@ -15,77 +15,69 @@ import RoomContainer from "../room/RoomContainer";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./user.css";
-import { Mic } from "lucide-react";
-import { MicOff } from "lucide-react";
-import VideoCamOffIcon from "@mui/icons-material/VideocamOff";
-import VideoCamIcon from "@mui/icons-material/Videocam";
-import ScreenShareIcon from "@mui/icons-material/ScreenShare";
-import StopScreenShareIcon from "@mui/icons-material/StopScreenShare";
-import CallEndIcon from "@mui/icons-material/CallEnd";
-import MessageIcon from "@mui/icons-material/Message";
-import CommentsDisabledIcon from "@mui/icons-material/CommentsDisabled";
-import { useEffect, useRef, useState } from "react";
-function HandleControlBar() {
-  const { localParticipant } = useLocalParticipant();
-  console.log("value: ", localParticipant.isMicrophoneEnabled);
 
-  const handleToggleTrack = (track: "AUDIO" | "VIDEO" | "SCREEN_SHARE") => {
-    if (track === "AUDIO") {
-      localParticipant.setMicrophoneEnabled(
-        !localParticipant.isMicrophoneEnabled
-      );
-    } else if (track === "VIDEO") {
-      localParticipant.setCameraEnabled(!localParticipant.isCameraEnabled);
-    } else {
-      localParticipant.setScreenShareEnabled(
-        !localParticipant.isScreenShareEnabled
-      );
-    }
-  };
+import CustomControlBar from "../CustomControlBar/CustomControlBar";
+import ChatPanel from "../CustomControlBar/ChatPanel";
+// function HandleControlBar() {
+//   const { localParticipant } = useLocalParticipant();
+//   console.log("value: ", localParticipant.isMicrophoneEnabled);
 
-  return (
-    <div className="control-box justify-center items-center gap-2.5 flex">
-      <button onClick={() => handleToggleTrack("AUDIO")}>
-        {localParticipant.isMicrophoneEnabled ? (
-          <span className="flex justify-between gap-2">
-            <Mic /> <p className="hidden md:block">Mute</p>
-          </span>
-        ) : (
-          <span className="flex justify-between gap-2">
-            <MicOff /> <p className="hidden md:block">Unmute</p>
-          </span>
-        )}
-      </button>
-      <button onClick={() => handleToggleTrack("VIDEO")}>
-        {localParticipant.isCameraEnabled ? (
-          <span className="flex justify-between gap-2">
-            <VideoCamIcon /> <p className="hidden md:block">Camera</p>
-          </span>
-        ) : (
-          <span className="flex justify-between gap-2">
-            <VideoCamOffIcon /> <p className="hidden md:block">Camera</p>
-          </span>
-        )}
-      </button>
-      <ConfirmLeaveButton />
-      <button onClick={() => handleToggleTrack("SCREEN_SHARE")}>
-        {localParticipant.isScreenShareEnabled ? (
-          <span className="flex justify-between gap-2">
-            <StopScreenShareIcon />{" "}
-            <p className="hidden md:block">Stop Share</p>
-          </span>
-        ) : (
-          <span className="flex justify-between gap-2">
-            <ScreenShareIcon /> <p className="hidden md:block">Share Screen</p>
-          </span>
-        )}
-      </button>
-      {/* <ControlBar controls={{ leave: false }} /> */}
+//   const handleToggleTrack = (track: "AUDIO" | "VIDEO" | "SCREEN_SHARE") => {
+//     if (track === "AUDIO") {
+//       localParticipant.setMicrophoneEnabled(
+//         !localParticipant.isMicrophoneEnabled
+//       );
+//     } else if (track === "VIDEO") {
+//       localParticipant.setCameraEnabled(!localParticipant.isCameraEnabled);
+//     } else {
+//       localParticipant.setScreenShareEnabled(
+//         !localParticipant.isScreenShareEnabled
+//       );
+//     }
+//   };
 
-      <ChatToggleWithPanel />
-    </div>
-  );
-}
+//   return (
+//     <div className="control-box justify-center items-center gap-2.5 flex">
+//       <button onClick={() => handleToggleTrack("AUDIO")}>
+//         {localParticipant.isMicrophoneEnabled ? (
+//           <span className="flex justify-between gap-2">
+//             <Mic /> <p className="hidden md:block">Mute</p>
+//           </span>
+//         ) : (
+//           <span className="flex justify-between gap-2">
+//             <MicOff /> <p className="hidden md:block">Unmute</p>
+//           </span>
+//         )}
+//       </button>
+//       <button onClick={() => handleToggleTrack("VIDEO")}>
+//         {localParticipant.isCameraEnabled ? (
+//           <span className="flex justify-between gap-2">
+//             <VideoCamIcon /> <p className="hidden md:block">Camera</p>
+//           </span>
+//         ) : (
+//           <span className="flex justify-between gap-2">
+//             <VideoCamOffIcon /> <p className="hidden md:block">Camera</p>
+//           </span>
+//         )}
+//       </button>
+//       <ConfirmLeaveButton />
+//       <button onClick={() => handleToggleTrack("SCREEN_SHARE")}>
+//         {localParticipant.isScreenShareEnabled ? (
+//           <span className="flex justify-between gap-2">
+//             <StopScreenShareIcon /> <p className="hidden md:block">Stop Share</p>
+//           </span>
+//         ) : (
+//           <span className="flex justify-between gap-2">
+//             <ScreenShareIcon /> <p className="hidden md:block">Share Screen</p>
+//           </span>
+//         )}
+//       </button>
+//       {/* <ControlBar controls={{ leave: false }} /> */}
+
+//       <ChatToggleWithPanel />
+//     </div>
+//   );
+// }
 
 // function HandleMobileControlBar() {
 //   const { localParticipant } = useLocalParticipant();
@@ -150,120 +142,120 @@ function HandleControlBar() {
 //   );
 // }
 
-function ChatToggleWithPanel() {
-  const { mergedProps } = useChatToggle({
-    props: {
-      className: "rounded border",
-      type: "button",
-    },
-  });
+// function ChatToggleWithPanel() {
+//   const { mergedProps } = useChatToggle({
+//     props: {
+//       className: "rounded border",
+//       type: "button",
+//     },
+//   });
 
-  const open = mergedProps["aria-pressed"] === "true";
+//   const open = mergedProps["aria-pressed"] === "true";
 
-  return (
-    <button {...mergedProps} style={{ padding: "10px", height: "45px" }}>
-      {open ? <CommentsDisabledIcon /> : <MessageIcon />}
-    </button>
-  );
-}
+//   return (
+//     <button {...mergedProps} style={{ padding: "10px", height: "45px" }}>
+//       {open ? <CommentsDisabledIcon /> : <MessageIcon />}
+//     </button>
+//   );
+// }
 
-function ChatPanel() {
-  const { mergedProps } = useChatToggle({
-    props: {
-      className: " rounded border",
-      type: "button",
-    },
-  });
-  const open = mergedProps["aria-pressed"] === "true";
+// function ChatPanel() {
+//   const { mergedProps } = useChatToggle({
+//     props: {
+//       className: " rounded border",
+//       type: "button",
+//     },
+//   });
+//   const open = mergedProps["aria-pressed"] === "true";
 
-  if (!open) return null;
+//   if (!open) return null;
 
-  return (
-    <div
-      style={{
-        borderLeft: "1px solid #2a2a2a",
-        height: "90%",
-        overflow: "hidden",
-      }}
-    >
-      <Chat style={{ height: "85vh", width: "100%", overflow: "scroll" }} />
-    </div>
-  );
-}
+//   return (
+//     <div
+//       style={{
+//         borderLeft: "1px solid #2a2a2a",
+//         height: "90%",
+//         overflow: "hidden",
+//       }}
+//     >
+//       <Chat style={{ height: "85vh", width: "100%", overflow: "scroll" }} />
+//     </div>
+//   );
+// }
 
-function NativeDialogComponent({
-  isOpen,
-  onClose,
-  onConfirm,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
-}) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
+// function NativeDialogComponent({
+//   isOpen,
+//   onClose,
+//   onConfirm,
+// }: {
+//   isOpen: boolean;
+//   onClose: () => void;
+//   onConfirm: () => void;
+// }) {
+//   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  useEffect(() => {
-    if (!dialogRef.current) return;
+//   useEffect(() => {
+//     if (!dialogRef.current) return;
 
-    if (isOpen) dialogRef.current.showModal();
-    else dialogRef.current.close();
-  }, [isOpen]);
+//     if (isOpen) dialogRef.current.showModal();
+//     else dialogRef.current.close();
+//   }, [isOpen]);
 
-  return (
-    <dialog
-      ref={dialogRef}
-      onCancel={onClose}
-      className=" bg-white text-black px-20 py-5 rounded-2xl left-[5%]  md:left-[35%]"
-    >
-      <div className="flex flex-col justify-center items-center gap-5">
-        <h3>Leave room?</h3>
-        <p>Are you sure you want to leave the call?</p>
-        <div className="flex justify-between gap-10">
-          <button onClick={onConfirm} className="bg-red-500! text-white!">
-            Leave
-          </button>
-          <button onClick={onClose} className="text-white">
-            Cancel
-          </button>
-        </div>
-      </div>
-    </dialog>
-  );
-}
+//   return (
+//     <dialog
+//       ref={dialogRef}
+//       onCancel={onClose}
+//       className=" bg-white text-black px-20 py-5 rounded-2xl left-[5%]  md:left-[35%]"
+//     >
+//       <div className="flex flex-col justify-center items-center gap-5">
+//         <h3>Leave room?</h3>
+//         <p>Are you sure you want to leave the call?</p>
+//         <div className="flex justify-between gap-10">
+//           <button onClick={onConfirm} className="bg-red-500! text-white!">
+//             Leave
+//           </button>
+//           <button onClick={onClose} className="text-white">
+//             Cancel
+//           </button>
+//         </div>
+//       </div>
+//     </dialog>
+//   );
+// }
 
-function ConfirmLeaveButton() {
-  const room = useRoomContext();
-  const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+// function ConfirmLeaveButton() {
+//   const room = useRoomContext();
+//   const navigate = useNavigate();
+//   const [open, setOpen] = useState(false);
 
-  const handleConfirm = () => {
-    room.disconnect();
-    navigate("/", { replace: true });
-  };
+//   const handleConfirm = () => {
+//     room.disconnect();
+//     navigate("/", { replace: true });
+//   };
 
-  return (
-    <>
-      <button
-        onClick={() => setOpen(true)}
-        style={{
-          padding: "10px 16px",
-          background: "red",
-          color: "white",
-          borderRadius: "6px",
-          fontWeight: 500,
-        }}
-      >
-        <CallEndIcon />
-      </button>
+//   return (
+//     <>
+//       <button
+//         onClick={() => setOpen(true)}
+//         style={{
+//           padding: "10px 16px",
+//           background: "red",
+//           color: "white",
+//           borderRadius: "6px",
+//           fontWeight: 500,
+//         }}
+//       >
+//         <CallEndIcon />
+//       </button>
 
-      <NativeDialogComponent
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        onConfirm={handleConfirm}
-      />
-    </>
-  );
-}
+//       <NativeDialogComponent
+//         isOpen={open}
+//         onClose={() => setOpen(false)}
+//         onConfirm={handleConfirm}
+//       />
+//     </>
+//   );
+// }
 
 export default function Room() {
   const { state } = useLocation();
@@ -292,7 +284,8 @@ export default function Room() {
             <div style={{ display: "flex", height: "100%" }}>
               <div className="w-full h-full flex flex-col ">
                 <GridLayoutContainer />
-                <HandleControlBar />
+                <CustomControlBar />
+                {/* <HandleControlBar /> */}
                 {/* <HandleMobileControlBar /> */}
               </div>
               <ChatPanel />

@@ -6,9 +6,6 @@ import {
   FocusLayoutContainer,
   TrackRefContext,
   TrackLoop,
-  GridLayout,
-  ParticipantTile,
-  CarouselLayout,
 } from "@livekit/components-react";
 import "./Grid.css";
 import FocusLayoutContainerInner from "./FocusLayoutContainerInner";

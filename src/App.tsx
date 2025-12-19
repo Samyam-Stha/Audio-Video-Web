@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 // import Room from "./routes/room";
-import User from "./components/user/user";
+import User from "./components/user/User";
 import Home from "./components/home/Home";
 export default function App() {
   return (
