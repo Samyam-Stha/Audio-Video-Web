@@ -1,7 +1,7 @@
 import { useRoomContext } from "@livekit/components-react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CallEndIcon from "@mui/icons-material/CallEnd";
+import { PhoneOff, LogOut } from "lucide-react";
 
 export default function ConfirmLeaveButton() {
   const room = useRoomContext();
@@ -17,15 +17,15 @@ export default function ConfirmLeaveButton() {
     <>
       <button
         onClick={() => setOpen(true)}
+        className="danger-state"
+        title="Leave Call"
         style={{
-          padding: "10px 16px",
-          background: "red",
-          color: "white",
-          borderRadius: "6px",
-          fontWeight: 500,
+          width: "44px",
+          height: "44px",
+          padding: "0",
         }}
       >
-        <CallEndIcon />
+        <PhoneOff size={20} />
       </button>
 
       <NativeDialogComponent
@@ -59,16 +59,19 @@ function NativeDialogComponent({
     <dialog
       ref={dialogRef}
       onCancel={onClose}
-      className=" bg-white text-black px-20 py-5 rounded-2xl left-[5%]  md:left-[35%]"
+      className="leave-dialog"
     >
-      <div className="flex flex-col justify-center items-center gap-5">
-        <h3>Leave room?</h3>
-        <p>Are you sure you want to leave the call?</p>
-        <div className="flex justify-between gap-10">
-          <button onClick={onConfirm} className="bg-red-500! text-white!">
-            Leave
+      <div className="leave-dialog-content">
+        <div className="leave-dialog-icon">
+          <LogOut size={28} />
+        </div>
+        <h3>Leave session?</h3>
+        <p>Are you sure you want to disconnect from this video call?</p>
+        <div className="leave-dialog-actions">
+          <button onClick={onConfirm} className="btn-leave">
+            Disconnect
           </button>
-          <button onClick={onClose} className="text-white">
+          <button onClick={onClose} className="btn-cancel">
             Cancel
           </button>
         </div>

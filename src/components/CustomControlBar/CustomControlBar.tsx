@@ -1,11 +1,13 @@
 import { useLocalParticipant } from "@livekit/components-react";
 import "@livekit/components-styles";
-import { Mic } from "lucide-react";
-import { MicOff } from "lucide-react";
-import VideoCamOffIcon from "@mui/icons-material/VideocamOff";
-import VideoCamIcon from "@mui/icons-material/Videocam";
-import ScreenShareIcon from "@mui/icons-material/ScreenShare";
-import StopScreenShareIcon from "@mui/icons-material/StopScreenShare";
+import {
+  Mic,
+  MicOff,
+  Video,
+  VideoOff,
+  Monitor,
+  MonitorOff,
+} from "lucide-react";
 import ConfirmLeaveButton from "./ConfirmLeaveButton";
 import ChatToggleWithPanel from "./ChatToggelWithPanel";
 
@@ -16,55 +18,82 @@ export default function CustomControlBar() {
   const handleToggleTrack = (track: "AUDIO" | "VIDEO" | "SCREEN_SHARE") => {
     if (track === "AUDIO") {
       localParticipant.setMicrophoneEnabled(
-        !localParticipant.isMicrophoneEnabled
+        !localParticipant.isMicrophoneEnabled,
       );
     } else if (track === "VIDEO") {
       localParticipant.setCameraEnabled(!localParticipant.isCameraEnabled);
     } else {
       localParticipant.setScreenShareEnabled(
-        !localParticipant.isScreenShareEnabled
+        !localParticipant.isScreenShareEnabled,
       );
     }
   };
 
   return (
-    <div className="control-box justify-center items-center gap-2.5 flex">
-      <button onClick={() => handleToggleTrack("AUDIO")}>
+    <div className="control-box">
+      <button
+        onClick={() => handleToggleTrack("AUDIO")}
+        className={localParticipant.isMicrophoneEnabled ? "" : "danger-state"}
+        title={
+          localParticipant.isMicrophoneEnabled
+            ? "Mute Microphone"
+            : "Unmute Microphone"
+        }
+      >
         {localParticipant.isMicrophoneEnabled ? (
-          <span className="flex justify-between gap-2">
-            <Mic /> <p className="hidden md:block">Mute</p>
+          <span>
+            <Mic size={20} /> <p className="hidden md:block">Mute</p>
           </span>
         ) : (
-          <span className="flex justify-between gap-2">
-            <MicOff /> <p className="hidden md:block">Unmute</p>
+          <span>
+            <MicOff size={20} /> <p className="hidden md:block">Unmute</p>
           </span>
         )}
       </button>
-      <button onClick={() => handleToggleTrack("VIDEO")}>
+      <button
+        onClick={() => handleToggleTrack("VIDEO")}
+        className={localParticipant.isCameraEnabled ? "" : "danger-state"}
+        title={
+          localParticipant.isCameraEnabled
+            ? "Turn Off Camera"
+            : "Turn On Camera"
+        }
+      >
         {localParticipant.isCameraEnabled ? (
-          <span className="flex justify-between gap-2">
-            <VideoCamIcon /> <p className="hidden md:block">Camera</p>
+          <span>
+            <Video size={20} /> <p className="hidden md:block">Stop Video</p>
           </span>
         ) : (
-          <span className="flex justify-between gap-2">
-            <VideoCamOffIcon /> <p className="hidden md:block">Camera</p>
+          <span>
+            <VideoOff size={20} />{" "}
+            <p className="hidden md:block">Start Video</p>
           </span>
         )}
       </button>
+
       <ConfirmLeaveButton />
-      <button onClick={() => handleToggleTrack("SCREEN_SHARE")}>
+
+      <button
+        onClick={() => handleToggleTrack("SCREEN_SHARE")}
+        className={localParticipant.isScreenShareEnabled ? "active-state" : ""}
+        title={
+          localParticipant.isScreenShareEnabled
+            ? "Stop Sharing"
+            : "Share Screen"
+        }
+      >
         {localParticipant.isScreenShareEnabled ? (
-          <span className="flex justify-between gap-2">
-            <StopScreenShareIcon />{" "}
+          <span>
+            <MonitorOff size={20} />{" "}
             <p className="hidden md:block">Stop Share</p>
           </span>
         ) : (
-          <span className="flex justify-between gap-2">
-            <ScreenShareIcon /> <p className="hidden md:block">Share Screen</p>
+          <span>
+            <Monitor size={20} />{" "}
+            <p className="hidden md:block">Share Screen</p>
           </span>
         )}
       </button>
-      {/* <ControlBar controls={{ leave: false }} /> */}
 
       <ChatToggleWithPanel />
     </div>

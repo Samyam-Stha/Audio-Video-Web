@@ -1,0 +1,197 @@
+.room-layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: var(--body-bg);
+  color: var(--text-color);
+}
+
+.room-main-area {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+.room-video-chat-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+dialog:-internal-dialog-in-top-layer::backdrop {
+  background-color: rgba(9, 13, 22, 0.8) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.remote-videos-container {
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.control-box {
+  background: var(--card-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--card-border) !important;
+  border-radius: 20px;
+  padding: 0.85rem 2rem !important;
+  margin: 1.25rem auto !important;
+  width: fit-content;
+  box-shadow: var(--shadow-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  z-index: 10;
+}
+
+
+.control-box button {
+  min-width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--button-border);
+  background-color: var(--button-bg);
+  color: var(--text-color);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+
+.control-box button span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 12px;
+}
+
+
+.control-box button:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-color);
+  background-color: var(--button-hover-bg);
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.2);
+}
+
+
+.control-box button.active-state {
+  background-color: rgba(16, 185, 129, 0.15) !important;
+  border-color: rgba(16, 185, 129, 0.4) !important;
+  color: var(--success-color) !important;
+}
+
+
+.control-box button.danger-state {
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+  color: var(--danger-color) !important;
+}
+
+.control-box button.danger-state:hover {
+  background-color: rgba(239, 68, 68, 0.25) !important;
+  border-color: var(--danger-color) !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+}
+
+
+:root.light .control-box {
+  background: rgba(255, 255, 255, 0.75);
+}
+
+
+.leave-dialog {
+  border: 1px solid var(--card-border) !important;
+  background: var(--card-bg) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+  color: var(--text-color) !important;
+  padding: 2rem 2.5rem !important;
+  border-radius: 20px !important;
+  box-shadow: var(--shadow-glow) !important;
+  outline: none;
+  max-width: 400px;
+  width: 90%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+}
+
+.leave-dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+}
+
+.leave-dialog-icon {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: var(--danger-color);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.25rem;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.1);
+}
+
+.leave-dialog-content h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.leave-dialog-content p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.leave-dialog-actions {
+  display: flex;
+  width: 100%;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.leave-dialog-actions button {
+  flex: 1;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.95rem;
+}
+
+.leave-dialog-actions button.btn-leave {
+  background: linear-gradient(135deg, var(--danger-color) 0%, var(--danger-hover) 100%) !important;
+  color: white !important;
+  border: none !important;
+  font-weight: 600;
+}
+
+.leave-dialog-actions button.btn-leave:hover {
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3) !important;
+  filter: brightness(1.1);
+}
+
+.leave-dialog-actions button.btn-cancel {
+  border: var(--button-border);
+  background-color: var(--button-bg);
+  color: var(--text-color);
+}
+
+

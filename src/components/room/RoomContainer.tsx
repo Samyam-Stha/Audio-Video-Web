@@ -1,9 +1,9 @@
 import { RoomContext, useRoomContext } from "@livekit/components-react";
 import type { Participant } from "livekit-client";
-import React, { useEffect, type ReactNode } from "react";
+import React, { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
-const RoomContainer = ({ children }: { children: ReactNode }) => {
+const RoomContainer = ({ children }: { children: React.ReactNode }) => {
   const room = useRoomContext();
 
   useEffect(() => {

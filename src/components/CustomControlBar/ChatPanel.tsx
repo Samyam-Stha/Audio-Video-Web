@@ -12,14 +12,8 @@ export default function ChatPanel() {
   if (!open) return null;
 
   return (
-    <div
-      style={{
-        borderLeft: "1px solid #2a2a2a",
-        height: "90%",
-        overflow: "hidden",
-      }}
-    >
-      <Chat style={{ height: "85vh", width: "100%", overflow: "scroll" }} />
+    <div className="md:border- w-[35%]  ">
+      <Chat />
     </div>
   );
 }
